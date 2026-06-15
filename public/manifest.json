@@ -1,0 +1,22 @@
+{
+  "name": "ACL Recovery Companion",
+  "short_name": "ACL Recovery",
+  "description": "Personal ACL recovery tracker",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f8f6",
+  "theme_color": "#3d8b6e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
