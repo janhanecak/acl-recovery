@@ -18,6 +18,7 @@ export interface DailyData {
   mood: string;
   exerciseTicked: string[];
   dayCompleted: boolean;
+  steps: number;
 }
 
 const DEFAULT: DailyData = {
@@ -31,6 +32,7 @@ const DEFAULT: DailyData = {
   mood: "",
   exerciseTicked: [],
   dayCompleted: false,
+  steps: 0,
 };
 
 function fromRow(row: Record<string, unknown>): DailyData {
@@ -45,6 +47,7 @@ function fromRow(row: Record<string, unknown>): DailyData {
     mood: (row.mood as string) ?? "",
     exerciseTicked: (row.exercise_ticked as string[]) ?? [],
     dayCompleted: (row.day_completed as boolean) ?? false,
+    steps: (row.steps as number) ?? 0,
   };
 }
 
@@ -61,6 +64,7 @@ function toRow(date: string, data: DailyData) {
     mood: data.mood,
     exercise_ticked: data.exerciseTicked,
     day_completed: data.dayCompleted,
+    steps: data.steps,
     updated_at: new Date().toISOString(),
   };
 }

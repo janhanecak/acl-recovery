@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import {
   getDayType,
@@ -170,6 +170,9 @@ export default function TodayPage() {
         </div>
       </div>
 
+      {/* Steps */}
+      <StepsCard steps={data.steps} onChange={(v) => update({ steps: v })} />
+
       {/* Link to exercises */}
       <Link
         href="/exercises"
@@ -329,6 +332,72 @@ function DaySummary({
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function StepsCard({ steps, onChange }: { steps: number; onChange: (v: number) => void }) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState("");
+
+  function commit() {
+    const n = parseInt(draft.replace(/\D/g, ""), 10);
+    if (!isNaN(n) && n >= 0) onChange(n);
+    setEditing(false);
+  }
+
+  return (
+    <div className="card space-y-3">
+      <div className="flex items-center gap-2">
+        <span className="text-lg">👟</span>
+        <h2 className="font-semibold text-text-primary">Daily Steps</h2>
+      </div>
+
+      <div className="flex items-center gap-3">
+        {/* Quick adjust */}
+        <button
+          onClick={() => onChange(Math.max(0, steps - 500))}
+          className="w-11 h-11 rounded-xl bg-gray-100 text-lg font-bold text-gray-500 flex items-center justify-center active:scale-95"
+        >
+          −
+        </button>
+
+        {/* Tap to edit */}
+        {editing ? (
+          <input
+            ref={inputRef}
+            type="number"
+            inputMode="numeric"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            onBlur={commit}
+            onKeyDown={(e) => e.key === "Enter" && commit()}
+            className="flex-1 h-11 text-center text-xl font-bold text-text-primary bg-accent-light rounded-xl focus:outline-none focus:ring-2 focus:ring-accent"
+            autoFocus
+          />
+        ) : (
+          <button
+            onClick={() => { setDraft(steps > 0 ? String(steps) : ""); setEditing(true); }}
+            className="flex-1 h-11 rounded-xl bg-gray-50 flex items-center justify-center"
+          >
+            <span className="text-xl font-bold text-text-primary">
+              {steps > 0 ? steps.toLocaleString() : "—"}
+            </span>
+          </button>
+        )}
+
+        <button
+          onClick={() => onChange(steps + 500)}
+          className="w-11 h-11 rounded-xl bg-gray-100 text-lg font-bold text-gray-500 flex items-center justify-center active:scale-95"
+        >
+          +
+        </button>
+      </div>
+
+      <p className="text-xs text-center text-text-secondary">
+        Check your Garmin / Apple Watch and tap the number to enter
+      </p>
     </div>
   );
 }
