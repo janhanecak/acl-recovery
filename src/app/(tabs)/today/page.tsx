@@ -204,7 +204,7 @@ export default function TodayPage() {
         }`}
       >
         <CheckCircle2 size={20} />
-        {data.dayCompleted ? "Day Complete ✓" : "Complete Day"}
+        {data.dayCompleted ? "Day Complete ✓  · tap to edit" : "Complete Day"}
       </button>
 
       {/* Day summary sheet */}
@@ -279,6 +279,10 @@ function DaySummary({
       label: "Mood",
       value: data.mood || "—",
     },
+    {
+      label: "Steps",
+      value: data.steps > 0 ? data.steps.toLocaleString() : "Not logged",
+    },
   ];
 
   return (
@@ -313,7 +317,7 @@ function DaySummary({
           ))}
 
           <p className="text-xs text-text-secondary text-center pt-2">
-            Data is saved locally. Supabase sync comes in Phase 2.
+            Everything saves automatically — you can edit at any time.
           </p>
         </div>
 
@@ -322,14 +326,16 @@ function DaySummary({
             onClick={onClose}
             className="flex-1 h-12 rounded-xl border border-gray-200 text-sm font-semibold text-text-secondary"
           >
-            Keep editing
+            {data.dayCompleted ? "Close" : "Keep editing"}
           </button>
-          <button
-            onClick={onConfirm}
-            className="flex-1 h-12 rounded-xl bg-accent text-white text-sm font-semibold"
-          >
-            Mark complete
-          </button>
+          {!data.dayCompleted && (
+            <button
+              onClick={onConfirm}
+              className="flex-1 h-12 rounded-xl bg-accent text-white text-sm font-semibold"
+            >
+              Mark complete
+            </button>
+          )}
         </div>
       </div>
     </div>
