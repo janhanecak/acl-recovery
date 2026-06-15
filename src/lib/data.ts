@@ -1,4 +1,4 @@
-export const POST_OP_START = new Date("2026-03-20"); // Day 0 — adjust to actual surgery date
+export const POST_OP_START = new Date(2026, 2, 19); // Day 0 — surgery 19 March 2026 (month is 0-indexed)
 export const GOLF_TARGET = new Date("2026-08-01");
 
 export type DayType = "strength" | "office" | "active-rest" | "rest";
