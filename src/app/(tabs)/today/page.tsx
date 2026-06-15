@@ -204,7 +204,7 @@ export default function TodayPage() {
         }`}
       >
         <CheckCircle2 size={20} />
-        {data.dayCompleted ? "Day Complete ✓  · tap to edit" : "Complete Day"}
+        {data.dayCompleted ? "Day Complete ✓  · view summary" : "Complete Day"}
       </button>
 
       {/* Day summary sheet */}

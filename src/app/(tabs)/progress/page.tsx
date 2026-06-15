@@ -62,7 +62,7 @@ export default function ProgressPage() {
 
       const { data, error } = await supabase
         .from("acl_daily_logs")
-        .select("log_date, pain, swelling, energy, mood")
+        .select("log_date, pain, swelling, energy, mood, steps")
         .gte("log_date", sinceStr)
         .order("log_date", { ascending: true });
 
@@ -74,7 +74,7 @@ export default function ProgressPage() {
             swelling: r.swelling ?? 0,
             energy: r.energy ?? 0,
             mood: moodToScore(r.mood ?? ""),
-            steps: 0, // Apple Health sync Phase 3
+            steps: r.steps ?? 0,
           }))
         );
       }
