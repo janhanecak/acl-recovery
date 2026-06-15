@@ -105,16 +105,12 @@ export function useDailyStore() {
       .select("*")
       .eq("log_date", date)
       .single()
-      .then(({ data: row }) => {
-        if (row) {
+      .then(({ data: row, error }) => {
+        if (!error && row) {
           const remote = fromRow(row);
           setData(remote);
           saveLocal(remote);
         }
-        setHydrated(true);
-      })
-      .catch(() => {
-        // Offline — fall back to localStorage
         setHydrated(true);
       });
   }, []);
@@ -131,7 +127,7 @@ export function useDailyStore() {
   const toggleExercise = useCallback((id: string) => {
     setData((prev) => {
       const ticked = new Set(prev.exerciseTicked);
-      ticked.has(id) ? ticked.delete(id) : ticked.add(id);
+      if (ticked.has(id)) { ticked.delete(id); } else { ticked.add(id); }
       const next = { ...prev, exerciseTicked: Array.from(ticked) };
       saveLocal(next);
       upsertSupabase(next);

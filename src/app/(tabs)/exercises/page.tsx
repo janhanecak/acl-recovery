@@ -3,7 +3,6 @@
 import { useState } from "react";
 import {
   EXERCISES,
-  getDayType,
   getDayTypeLabel,
   getDayTypeColors,
   type DayType,
